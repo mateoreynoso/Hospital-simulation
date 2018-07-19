@@ -116,7 +116,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="simulator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="doctor.h" />
+    <ClInclude Include="hospitalWorker.h" />
+    <ClInclude Include="nurse.h" />
+    <ClInclude Include="people.h" />
+    <ClInclude Include="simulator.h" />
+    <ClInclude Include="waitingRoom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

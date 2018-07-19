@@ -18,8 +18,25 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="simulator.cpp">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="simulator.h">
       <Filter>Header Files</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="people.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="waitingRoom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hospitalWorker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="doctor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nurse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
