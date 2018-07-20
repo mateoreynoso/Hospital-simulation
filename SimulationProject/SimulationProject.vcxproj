@@ -121,7 +121,10 @@
     <ClInclude Include="doctor.h" />
     <ClInclude Include="hospitalWorker.h" />
     <ClInclude Include="nurse.h" />
+    <ClInclude Include="patientRecord.h" />
     <ClInclude Include="people.h" />
+    <ClInclude Include="random.h" />
+    <ClInclude Include="readInt.h" />
     <ClInclude Include="simulator.h" />
     <ClInclude Include="waitingRoom.h" />
   </ItemGroup>

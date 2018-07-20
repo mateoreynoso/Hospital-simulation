@@ -21,6 +21,13 @@ public:
 	std::string getName() { return name; }
 	std::string getSurname() { return surname; }
 
+	// For cout
+
+	std::string read()
+	{
+		return "Patient: " + surname + ", " + name;
+	}
+
 };
 
 #endif // !people_h_
