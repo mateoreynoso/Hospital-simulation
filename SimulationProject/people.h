@@ -13,7 +13,7 @@ private:
 public:
 
 	// Constructror
-
+	people(std::string name) : name(name) {}
 	people(std::string name, std::string surname) : name(name), surname(surname) {}
 
 	// Getters
@@ -21,11 +21,14 @@ public:
 	std::string getName() { return name; }
 	std::string getSurname() { return surname; }
 
+	//Set
+	void setSurname(std::string _sur) { surname = _sur; }
+
 	// For cout
 
 	std::string read()
 	{
-		return "Patient: " + surname + ", " + name;
+		return "Patient: " + getSurname() + ", " + getName();
 	}
 
 };

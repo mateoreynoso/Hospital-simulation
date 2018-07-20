@@ -9,8 +9,8 @@ class patientRecord
 private:
 
 	people * patient;
-	std::vector<int> severity;
-	std::vector<int> time;
+	int severity;
+	int time;
 	int times;
 
 public:
@@ -18,28 +18,13 @@ public:
 	// Constructor
 	patientRecord() {}
 
-	patientRecord(people &patient, int prio, int clock) : patient(&patient)
-	{
-		severity.push_back(prio);
-		time.push_back(clock);
-	}
-
-	void addToRecord(int prio, int clock)
-	{
-		severity.push_back(prio);
-		time.push_back(clock);
-	}
+	patientRecord(people &patient, int prio, int clock) : patient(&patient), time(clock), severity(prio) {}
 
 	void showRecord()
 	{
 		std::cout << patient->read() << std::endl;
-		std::cout << "Times attended: " << times << std::endl;
-		for (int i = 0; i < (int)severity.size(); i++)
-		{
-			std::cout << i << "th time" << std::endl;
-			std::cout << "Date: " << time.at(i) << std::endl;
-			std::cout << "Severity: " << severity.at(i) << std::endl;
-		}
+		std::cout << "Date: " << time << std::endl;
+		std::cout << "Severity: " << severity << std::endl;
 	}
 
 };

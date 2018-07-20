@@ -44,7 +44,7 @@ public:
 	void updateW(int clock)
 	{
 		if (clock - startTreatment == treatment)
-			patient = NULL;
+			delete patient;
 	}
 };
 

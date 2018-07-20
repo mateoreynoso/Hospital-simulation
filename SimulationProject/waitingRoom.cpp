@@ -17,8 +17,8 @@ void waitingRoom::addWaitingRoom(int numDoc, int numNur)
 void waitingRoom::update(int clock)
 {
 	// According to rate check if new patient arrives
-
-	if (my_random.next_double() < patientRate)
+	double prob = my_random.next_double();
+	if (prob < patientRate)
 	{
 		double type = my_random.next_double();
 		int ran = my_random.nextInt(peopleVille.size());
@@ -37,8 +37,10 @@ void waitingRoom::update(int clock)
 		}
 		else
 			std::cout << "Something bad happend :c " << std::endl;
-		patient a(peopleVille.at(ran), prio);
-		patients.push_back(a);
+		peopleVille.at(ran)->read();
+		people a = *peopleVille.at(ran);
+		patient *arriving = new patient(a, prio);
+		patients.push(arriving);
 	}
 
 	if (!patients.empty()) // Do if there is patients in the queue
@@ -49,69 +51,37 @@ void waitingRoom::update(int clock)
 		for (int j = 0; j < (int)nursesStaff.size(); j++)
 		{
 			// To get the first from the queue with less than 10 priority
-			patient *temp;
-			if (patients.front().getPriority() < 11)
+			if ((!patients.empty() && nursesStaff.at(j)->free()) && (patients.front()->getPriority() < 11)) // Had to do a lot of these, because I had trouble refrerring to the front when it was empty
 			{
-				temp = &patients.front();
-				patients.pop_front();
-			}
+		
+				patient* temp = patients.front();
+				patients.pop();
 
-			else
-				temp = NULL;
-
-			// If there is someone in the dequeue it makes the nurses treat the patient
-			if (nursesStaff.at(j)->free() && temp != NULL)
-			{
+				// If there is someone in the dequeue it makes the nurses treat the patient
 				patientRecord nurRec = nursesStaff.at(j)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
 				// Add the recrod to map
-				recordsStorage.insert(std::make_pair(temp->getPeople()->getSurname(),nurRec));
+				nurRec.showRecord();
+				recordsStorage.insert(std::make_pair(temp->getPeople()->getSurname(), nurRec));
+					
+	
 			}
 		}
+	}
 
+	if (!patients.empty())
+	{
 		for (int i = 0; i < (int)doctorsStaff.size(); i++)
 		{
 			// Similar but checks to priority 20 so, the less ill people get treated by nurses
-			patient *temp;
-			temp = NULL;
-			if (patients.front().getPriority() > 10)
+			
+			if (!patients.empty() && doctorsStaff.at(i)->free())
 			{
-				temp = &patients.front();
-				patients.pop_front();
-			}
-
-
-			// If it finds a patient with high priority, it skips this part. If not it gets someone with less than 10 prio
-			else if (patients.front().getPriority() < 10)
-			{
-				for (int p = 0; p < (int)patients.size(); p++)
-				{
-					if (patients.at(p).getPriority() > 10)
-					{
-						temp = &patients.at(p);
-
-						// Tried this did not worked 
-						patients.erase(patients.begin()+p);
-						// patients.pop_front();
-						p = (int)patients.size();
-					}
-				}
-				if (temp != NULL)
-				{
-					temp = &patients.front();
-					patients.pop_front();
-				}
-
-			}
-			// To make sure its null
-			else if (patients.empty())
-				temp = NULL;
-
-
-			if (doctorsStaff.at(i)->free() && temp != NULL)
-			{
+				patient *temp = patients.front();
+				patients.pop();
 				patientRecord docRec = doctorsStaff.at(i)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
 				// Add record to amp
 				recordsStorage.insert(std::make_pair(temp->getPeople()->getSurname(), docRec));
+				
 			}
 		}
 	}
@@ -134,8 +104,6 @@ void waitingRoom::update(int clock)
 
 void waitingRoom::loadPeople()
 {
-	std::queue<std::string> tempName;
-	std::queue<std::string> tempSurname;
 	// for name
 	std::string IN;
 	std::ifstream nameFile;
@@ -147,12 +115,13 @@ void waitingRoom::loadPeople()
 	while (!nameFile.eof())
 	{
 		getline(nameFile, IN);
-		tempName.push(IN);
+		peopleVille.push_back(new people(IN));
 	}
 	// for surname
 
 	std::ifstream surnameFile;
 	surnameFile.open("surnames_of_273ville.txt");
+	int n = 0;
 	if (nameFile.fail())
 	{
 		std::cout << "Error opening the file. " << std::endl;
@@ -160,19 +129,10 @@ void waitingRoom::loadPeople()
 	while (!surnameFile.eof())
 	{
 		getline(surnameFile, IN);
-		tempSurname.push(IN);
+		peopleVille.at(n)->setSurname(IN);
+		n++;
 	}
 	
-	// Now make the people object;
-	while (!tempName.empty() && !tempSurname.empty())
-	{
-		peopleVille.push_back(people(tempName.front(), tempSurname.front()));
-		tempName.pop();
-		tempSurname.pop();
-	}
-
-	// Works to here, loads the names
-
 }
 
 void waitingRoom::records()

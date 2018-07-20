@@ -10,7 +10,7 @@ class simulator
 private:
 	
 	int totalTime;
-	int clock;
+	int clock = 0;
 	waitingRoom * waitingR;
 
 
@@ -28,6 +28,7 @@ public:
 		double patientRate = rate / 60.0;
 		// The duration of the simulation
 		totalTime = read_int("Please enter the duration of the simulation (hours): ", 1, INT_MAX);
+		totalTime *= 60;
 		// The number of doctors and nurses
 		int doc = read_int("Please enter the number of doctors: ", 1, INT_MAX);
 		int nur = read_int("Please enter the number of nurses: ", 1, INT_MAX);

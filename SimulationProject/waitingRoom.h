@@ -21,8 +21,8 @@ private:
 
 	std::vector<doctor*> doctorsStaff;
 	std::vector<nurse*> nursesStaff;
-	std::vector<people> peopleVille;
-	std::deque<patient> patients;
+	std::vector<people*> peopleVille;
+	std::queue<patient*> patients;
 	std::map<std::string, patientRecord> recordsStorage;
 	double patientRate;
 

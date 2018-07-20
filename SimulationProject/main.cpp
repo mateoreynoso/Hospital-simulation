@@ -17,5 +17,6 @@ int main()
 	hospital.runSimulation();
 	hospital.showStats();
 
+
 	return 0;
 }
