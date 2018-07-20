@@ -116,14 +116,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="patient.cpp" />
+    <ClCompile Include="waitingRoom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="doctor.h" />
     <ClInclude Include="hospitalWorker.h" />
     <ClInclude Include="nurse.h" />
+    <ClInclude Include="patient.h" />
     <ClInclude Include="patientRecord.h" />
     <ClInclude Include="people.h" />
-    <ClInclude Include="random.h" />
+    <ClInclude Include="myRandom.h" />
     <ClInclude Include="readInt.h" />
     <ClInclude Include="simulator.h" />
     <ClInclude Include="waitingRoom.h" />

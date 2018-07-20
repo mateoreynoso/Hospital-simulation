@@ -1,11 +1,16 @@
 #ifndef waitingroom_h_
 #define waitingroom_h_
+#include <iostream>
 #include <vector>
+#include <fstream>
+#include <queue>
 #include "doctor.h"
 #include "nurse.h"
 #include "people.h"
-#include "random.h"
+#include "myRandom.h"
+#include "patient.h"
 
+extern myRandom my_random;
 
 class waitingRoom
 {
@@ -13,7 +18,8 @@ private:
 
 	std::vector<doctor*> doctorsStaff;
 	std::vector<nurse*> nursesStaff;
-	std::vector<people*> patientQueue;
+	std::vector<people*> peopleVille;
+	std::priority_queue<patient> patients;
 	int patientRate;
 
 public:
@@ -23,25 +29,15 @@ public:
 
 	void setPatientRate(int rate) { patientRate = rate; }
 
-	void addWaitingRoom(int numDoc, int numNur)
-	{
-		for (int i = 0; i < numDoc; i++)
-		{
-			doctorsStaff.push_back(new doctor());
+	// Adds the correct amount of doctors and nurses according to the input of the user
+	void addWaitingRoom(int numDoc, int numNur);
 
-		}
+	void update(int clock);
 
-		for (int j = 0; j < numNur; j++)
-		{
-			nursesStaff.push_back(new nurse());
-		}
-	}
+	// Loads people from CS273Ville
+	void loadPeople();
 
-	void update( int clock )
-	{
-
-	}
-
+	void records();
 };
 
 #endif // !waitingroom_h_

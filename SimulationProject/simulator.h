@@ -48,9 +48,9 @@ public:
 
 	}
 
-	bool loadVille()
+	void loadVille()
 	{
-
+		waitingR->loadPeople();
 	}
 
 };
