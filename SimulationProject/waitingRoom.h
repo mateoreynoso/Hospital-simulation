@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <queue>
+#include <deque>
 #include "doctor.h"
 #include "nurse.h"
 #include "people.h"
@@ -19,7 +19,7 @@ private:
 	std::vector<doctor*> doctorsStaff;
 	std::vector<nurse*> nursesStaff;
 	std::vector<people*> peopleVille;
-	std::priority_queue<patient> patients;
+	std::deque<patient> patients;
 	int patientRate;
 
 public:
@@ -37,7 +37,11 @@ public:
 	// Loads people from CS273Ville
 	void loadPeople();
 
+	// Show all the records
 	void records();
+
+	// Search record
+	void serchRecord();
 };
 
 #endif // !waitingroom_h_

@@ -2,6 +2,7 @@
 #define hospitalWorker_h_
 #include "people.h"
 #include "myRandom.h"
+#include "patientRecord.h"
 
 extern myRandom my_random;
 
@@ -30,13 +31,14 @@ public:
 			return false;
 	}
 
-	void treatPatient(int clock, people &_patient)
+	patientRecord treatPatient(int clock, people _patient, int prio)
 	{
 		patient = &_patient;
 		startTreatment = clock;
 		treatment = my_random.nextInt(maxTreatment-minTreatment)+minTreatment;
 	
 		// To add the record
+		return patientRecord(_patient, prio, clock);
 	}
 
 	void updateW(int clock)

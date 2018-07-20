@@ -31,9 +31,9 @@ public:
 
 	void showRecord()
 	{
-		std::cout << patient->read << std::endl;
+		std::cout << patient->read() << std::endl;
 		std::cout << "Times attended: " << times << std::endl;
-		for (int i = 0; i < severity.size(); i++)
+		for (int i = 0; i < (int)severity.size(); i++)
 		{
 			std::cout << i << "th time" << std::endl;
 			std::cout << "Date: " << time.at(i) << std::endl;
