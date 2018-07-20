@@ -37,7 +37,7 @@ void waitingRoom::update(int clock)
 		}
 		else
 			std::cout << "Something bad happend :c " << std::endl;
-		patient a(*peopleVille.at(ran), prio);
+		patient a(peopleVille.at(ran), prio);
 		patients.push_back(a);
 	}
 
@@ -60,10 +60,11 @@ void waitingRoom::update(int clock)
 				temp = NULL;
 
 			// If there is someone in the dequeue it makes the nurses treat the patient
-			if (nursesStaff.at(j)->free() && temp == NULL)
+			if (nursesStaff.at(j)->free() && temp != NULL)
 			{
 				patientRecord nurRec = nursesStaff.at(j)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
-				// Add the recrod to ...
+				// Add the recrod to map
+				recordsStorage.insert(std::make_pair(temp->getPeople()->getSurname(),nurRec));
 			}
 		}
 
@@ -106,10 +107,11 @@ void waitingRoom::update(int clock)
 				temp = NULL;
 
 
-			if (doctorsStaff.at(i)->free())
+			if (doctorsStaff.at(i)->free() && temp != NULL)
 			{
 				patientRecord docRec = doctorsStaff.at(i)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
-				// Add record to ...
+				// Add record to amp
+				recordsStorage.insert(std::make_pair(temp->getPeople()->getSurname(), docRec));
 			}
 		}
 	}
@@ -132,8 +134,8 @@ void waitingRoom::update(int clock)
 
 void waitingRoom::loadPeople()
 {
-	std::vector<std::string> tempName;
-	std::vector<std::string> tempSurname;
+	std::queue<std::string> tempName;
+	std::queue<std::string> tempSurname;
 	// for name
 	std::string IN;
 	std::ifstream nameFile;
@@ -145,9 +147,10 @@ void waitingRoom::loadPeople()
 	while (!nameFile.eof())
 	{
 		getline(nameFile, IN);
-		tempName.push_back(IN);
+		tempName.push(IN);
 	}
 	// for surname
+
 	std::ifstream surnameFile;
 	surnameFile.open("surnames_of_273ville.txt");
 	if (nameFile.fail())
@@ -157,17 +160,36 @@ void waitingRoom::loadPeople()
 	while (!surnameFile.eof())
 	{
 		getline(surnameFile, IN);
-		tempSurname.push_back(IN);
+		tempSurname.push(IN);
+	}
+	
+	// Now make the people object;
+	while (!tempName.empty() && !tempSurname.empty())
+	{
+		peopleVille.push_back(people(tempName.front(), tempSurname.front()));
+		tempName.pop();
+		tempSurname.pop();
 	}
 
-	// Now make the people object;
-	for (int i = 0; i < (int)tempName.size(); i++)
-	{
-		peopleVille.push_back(new people(tempName.at(i), tempSurname.at(i)));
-	}
+	// Works to here, loads the names
 
 }
 
 void waitingRoom::records()
 {
+
+	for (std::map<std::string, patientRecord>::iterator it = recordsStorage.begin();
+		it != recordsStorage.end(); it++)
+	{
+
+		std::string key = it->first;
+		patientRecord value = it->second;
+		value.showRecord();
+
+	}
+}
+
+patientRecord waitingRoom::serchRecord(std::string surname)
+{
+	return recordsStorage[surname];
 }

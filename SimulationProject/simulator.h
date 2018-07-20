@@ -36,6 +36,8 @@ public:
 		waitingR->addWaitingRoom(doc, nur);
 		// To set up the patient rate
 		waitingR->setPatientRate(patientRate);
+		// Load people
+		loadVille();
 	}
 
 	void runSimulation()
@@ -49,24 +51,35 @@ public:
 	void showStats()
 	{
 		char op = 'a';
+		std::string search;
 		while (op != 'x')
 		{
+			
 			std::cout << "Enter your option: " << std::endl;
 			std::cout << "1) Show all patients." << std::endl;
 			std::cout << "2) Search patient history by name." << std::endl;
 			std::cout << "x) Exit the program." << std::endl;
+			std::cin >> op;
 			switch (op)
 			{
 			case '1':
+			{
 				waitingR->records();
 				break;
+			}
+				
 			case '2':
-				waitingR->serchRecord();
+			{
+				std::cout << "Enter the surname by which you whant yo search the record: " << std::endl;
+				std::cin >> search;
+				waitingR->serchRecord(search).showRecord();
 				break;
+			}
+				
 			case 'x':
 				return;
 			default:
-				return;
+				break;
 			}
 		}
 		

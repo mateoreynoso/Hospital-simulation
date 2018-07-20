@@ -16,6 +16,7 @@ private:
 public:
 
 	// Constructor
+	patientRecord() {}
 
 	patientRecord(people &patient, int prio, int clock) : patient(&patient)
 	{
