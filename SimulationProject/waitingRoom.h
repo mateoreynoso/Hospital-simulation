@@ -23,7 +23,7 @@ private:
 	std::vector<nurse*> nursesStaff;
 	std::vector<people*> peopleVille;
 	std::queue<patient*> patients;
-	std::map<std::string, patientRecord> recordsStorage;
+	std::map<std::string, patientRecord*> recordsStorage;
 	double patientRate;
 
 public:
@@ -45,7 +45,7 @@ public:
 	void records();
 
 	// Search record
-	patientRecord serchRecord(std::string surname);
+	patientRecord* serchRecord(std::string surname);
 };
 
 #endif // !waitingroom_h_

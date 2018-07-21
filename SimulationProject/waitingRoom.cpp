@@ -38,9 +38,7 @@ void waitingRoom::update(int clock)
 		else
 			std::cout << "Something bad happend :c " << std::endl;
 		peopleVille.at(ran)->read();
-		people a = *peopleVille.at(ran);
-		patient *arriving = new patient(a, prio);
-		patients.push(arriving);
+		patients.push(new patient(peopleVille.at(ran), prio));
 	}
 
 	if (!patients.empty()) // Do if there is patients in the queue
@@ -58,9 +56,9 @@ void waitingRoom::update(int clock)
 				patients.pop();
 
 				// If there is someone in the dequeue it makes the nurses treat the patient
-				patientRecord nurRec = nursesStaff.at(j)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
+				patientRecord *nurRec = nursesStaff.at(j)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
 				// Add the recrod to map
-				nurRec.showRecord();
+				nurRec->showRecord();
 				recordsStorage.insert(std::make_pair(temp->getPeople()->getSurname(), nurRec));
 					
 	
@@ -78,7 +76,7 @@ void waitingRoom::update(int clock)
 			{
 				patient *temp = patients.front();
 				patients.pop();
-				patientRecord docRec = doctorsStaff.at(i)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
+				patientRecord *docRec = doctorsStaff.at(i)->treatPatient(clock, *temp->getPeople(), temp->getPriority());
 				// Add record to amp
 				recordsStorage.insert(std::make_pair(temp->getPeople()->getSurname(), docRec));
 				
@@ -110,26 +108,26 @@ void waitingRoom::loadPeople()
 	nameFile.open("residents_of_273ville.txt");
 	if (nameFile.fail())
 	{
-		std::cout << "Error opening the file." << std::endl;
+		std::cout << "Error opening the name file." << std::endl;
 	}
 	while (!nameFile.eof())
 	{
 		getline(nameFile, IN);
-		peopleVille.push_back(new people(IN));
+		peopleVille.push_back(new people(new std::string(IN)));
 	}
 	// for surname
 
 	std::ifstream surnameFile;
 	surnameFile.open("surnames_of_273ville.txt");
 	int n = 0;
-	if (nameFile.fail())
+	if (surnameFile.fail())
 	{
-		std::cout << "Error opening the file. " << std::endl;
+		std::cout << "Error opening the surname file. " << std::endl;
 	}
 	while (!surnameFile.eof())
 	{
 		getline(surnameFile, IN);
-		peopleVille.at(n)->setSurname(IN);
+		peopleVille.at(n)->setSurname(new std::string(IN));
 		n++;
 	}
 	
@@ -138,18 +136,18 @@ void waitingRoom::loadPeople()
 void waitingRoom::records()
 {
 
-	for (std::map<std::string, patientRecord>::iterator it = recordsStorage.begin();
+	for (std::map<std::string, patientRecord*>::iterator it = recordsStorage.begin();
 		it != recordsStorage.end(); it++)
 	{
 
 		std::string key = it->first;
-		patientRecord value = it->second;
-		value.showRecord();
+		patientRecord *value = it->second;
+		value->showRecord();
 
 	}
 }
 
-patientRecord waitingRoom::serchRecord(std::string surname)
+patientRecord* waitingRoom::serchRecord(std::string surname)
 {
 	return recordsStorage[surname];
 }

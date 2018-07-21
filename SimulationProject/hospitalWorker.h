@@ -31,14 +31,14 @@ public:
 			return false;
 	}
 
-	patientRecord treatPatient(int clock, people _patient, int prio)
+	patientRecord* treatPatient(int clock, people _patient, int prio)
 	{
 		patient = &_patient;
 		startTreatment = clock;
 		treatment = my_random.nextInt(maxTreatment-minTreatment)+minTreatment;
 	
 		// To add the record
-		return patientRecord(_patient, prio, clock);
+		return new patientRecord(_patient, prio, clock);
 	}
 
 	void updateW(int clock)

@@ -7,22 +7,22 @@ class people
 {
 private:
 
-	std::string name;
-	std::string surname;
+	std::string *name;
+	std::string *surname;
 
 public:
 
 	// Constructror
-	people(std::string name) : name(name) {}
-	people(std::string name, std::string surname) : name(name), surname(surname) {}
+	people(std::string *_name) { name = _name; }
+	people(std::string _name, std::string _surname) { *surname = _surname; }
 
 	// Getters
 
-	std::string getName() { return name; }
-	std::string getSurname() { return surname; }
+	std::string getName() { return *name; }
+	std::string getSurname() { return *surname; }
 
 	//Set
-	void setSurname(std::string _sur) { surname = _sur; }
+	void setSurname(std::string *_sur) { surname = _sur; }
 
 	// For cout
 

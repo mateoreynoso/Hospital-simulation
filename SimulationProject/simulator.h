@@ -73,7 +73,7 @@ public:
 			{
 				std::cout << "Enter the surname by which you whant yo search the record: " << std::endl;
 				std::cin >> search;
-				waitingR->serchRecord(search).showRecord();
+				waitingR->serchRecord(search)->showRecord();
 				break;
 			}
 				

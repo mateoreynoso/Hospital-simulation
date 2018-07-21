@@ -12,7 +12,7 @@ private:
 public:
 
 	// Constructor
-	patient(people _in, int prio) : priority(prio) { *subject = _in; }
+	patient(people *_in, int prio) : priority(prio) { subject = _in; }
 
 	int getPriority() const { return priority; }
 	people* getPeople() const { return subject; }
